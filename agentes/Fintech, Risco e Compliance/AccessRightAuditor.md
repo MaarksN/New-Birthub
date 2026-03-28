@@ -1,0 +1,7 @@
+# Agente: AccessRightAuditor
+
+**Domínio:** Fintech, Risco e Compliance
+
+## Descrição
+
+(A preencher)
