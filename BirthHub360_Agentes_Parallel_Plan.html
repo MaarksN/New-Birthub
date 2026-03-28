@@ -1,0 +1,1238 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BirthHub360 • Plano Paralelo de Criação de Agentes — Jules & Codex</title>
+<style>
+:root {
+  --primary: #1B4F72;
+  --accent: #2E86C1;
+  --light: #D6EAF8;
+  --codex-bg: #EBF5FB;
+  --codex-border: #2E86C1;
+  --jules-bg: #E9F7EF;
+  --jules-border: #27AE60;
+  --red: #C0392B; --red-bg: #FDEDEC;
+  --green: #1E8449; --green-bg: #D5F5E3;
+  --yellow: #B7950B; --yellow-bg: #FEF9E7;
+  --gray: #566573; --light-gray: #F2F3F4;
+  --border: #CACFD2; --white: #fff;
+  --radius: 10px; --shadow: 0 10px 24px rgba(0,0,0,.08);
+}
+* { box-sizing:border-box; }
+body {
+  margin:0;
+  font-family: Inter, "Segoe UI", Arial, sans-serif;
+  background: linear-gradient(180deg,#f4f8fb 0%, #eef3f7 100%);
+  color:#1c2833;
+}
+header {
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  color:#fff;
+  padding: 30px 22px;
+}
+header h1 {
+  margin:0 0 10px;
+  font-size: clamp(1.7rem, 2vw, 2.4rem);
+}
+header p {
+  max-width: 980px;
+  margin:0;
+  line-height:1.55;
+  opacity:.95;
+}
+.wrap {
+  max-width: 1380px;
+  margin: 0 auto;
+  padding: 22px;
+}
+.stats {
+  display:grid;
+  grid-template-columns: repeat(auto-fit,minmax(180px,1fr));
+  gap:14px;
+  margin-top:-18px;
+}
+.card {
+  background:#fff;
+  border-radius:var(--radius);
+  padding:16px 18px;
+  box-shadow:var(--shadow);
+}
+.stat-number {
+  font-size:2rem;
+  font-weight:800;
+  color:var(--primary);
+}
+.small {
+  font-size:.92rem;
+  color:var(--gray);
+}
+.grid-2 {
+  display:grid;
+  grid-template-columns:1.15fr .85fr;
+  gap:18px;
+  margin-top:18px;
+}
+.protocol, .rules {
+  background:#fff;
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  padding:18px 20px;
+}
+.protocol h2, .rules h2, .domains h2, .cycles h2 {
+  margin-top:0;
+}
+.timeline {
+  display:grid;
+  grid-template-columns: repeat(auto-fit,minmax(230px,1fr));
+  gap:12px;
+}
+.step {
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:14px;
+  background:#fafcfe;
+}
+.step strong {
+  display:block;
+  margin-bottom:8px;
+  color:var(--primary);
+}
+.note {
+  margin-top:12px;
+  padding:12px 14px;
+  background:var(--yellow-bg);
+  border-left:4px solid var(--yellow);
+  border-radius:8px;
+}
+.rules ul {
+  margin:0;
+  padding-left:18px;
+  line-height:1.6;
+}
+.domains {
+  margin-top:18px;
+}
+.domain-grid {
+  display:grid;
+  grid-template-columns: repeat(auto-fit,minmax(270px,1fr));
+  gap:14px;
+}
+.domain-card {
+  background:#fff;
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  padding:16px;
+}
+.domain-head, .cycle-top {
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  align-items:flex-start;
+}
+.pill {
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:6px 10px;
+  border-radius:999px;
+  background:var(--light);
+  color:var(--primary);
+  font-weight:700;
+  font-size:.84rem;
+}
+.effort {
+  background:var(--yellow-bg);
+  color:#8a6c00;
+}
+.muted {
+  color:var(--gray);
+}
+details {
+  margin-top:12px;
+}
+summary {
+  cursor:pointer;
+  font-weight:700;
+  color:var(--primary);
+}
+.tag-wrap {
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:12px;
+}
+.tag {
+  display:inline-block;
+  padding:6px 10px;
+  border-radius:999px;
+  background:#f2f6f9;
+  border:1px solid #dde6ed;
+  font-size:.82rem;
+}
+.agent-tag {
+  background:#fff;
+}
+.cycles {
+  margin-top:22px;
+}
+.toolbar {
+  display:flex;
+  gap:10px;
+  align-items:center;
+  flex-wrap:wrap;
+  margin-bottom:14px;
+}
+.toolbar input {
+  width:min(460px,100%);
+  padding:11px 12px;
+  border:1px solid var(--border);
+  border-radius:10px;
+  font-size:1rem;
+}
+.cycle-list {
+  display:grid;
+  gap:16px;
+}
+.cycle-card {
+  background:#fff;
+  border-radius:14px;
+  box-shadow:var(--shadow);
+  padding:18px;
+  border:1px solid #e4ebf1;
+}
+.cycle-card p {
+  margin:6px 0 0;
+  color:var(--gray);
+}
+.cycle-metrics {
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+.protocol-grid {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+  margin-top:16px;
+}
+.lane {
+  border-radius:12px;
+  padding:14px 16px;
+}
+.lane h4 {
+  margin:0 0 10px;
+}
+.lane ol {
+  margin:0;
+  padding-left:18px;
+  line-height:1.55;
+}
+.codex {
+  background:var(--codex-bg);
+  border-left:5px solid var(--codex-border);
+}
+.jules {
+  background:var(--jules-bg);
+  border-left:5px solid var(--jules-border);
+}
+.phases {
+  display:grid;
+  grid-template-columns: repeat(auto-fit,minmax(170px,1fr));
+  gap:10px;
+  margin-top:16px;
+}
+.phase {
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:12px;
+  background:#fafcfe;
+}
+.phase strong {
+  display:block;
+  margin-bottom:6px;
+  color:var(--primary);
+}
+.footer-note {
+  margin-top:20px;
+  padding:16px;
+  border-radius:12px;
+  background:#fff;
+  box-shadow:var(--shadow);
+}
+@media (max-width: 980px) {
+  .grid-2, .protocol-grid {
+    grid-template-columns:1fr;
+  }
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap" style="padding:0;">
+    <h1>BirthHub360 • HTML Paralelo para Criação de Todos os Agentes</h1>
+    <p>Plano operacional para <strong>JULES</strong> e <strong>CODEX</strong> criarem o catálogo inteiro de agentes em paralelo, com validação cruzada obrigatória. Baseado no arquivo <strong>agentes.docx</strong>, com 332 agentes extraídos em 9 macrodomínios. A lógica foi ajustada para que ambos iniciem o <strong>Ciclo 1 na primeira execução</strong>; a partir da <strong>segunda execução</strong>, cada um <strong>primeiro valida a entrega anterior do outro</strong> e só depois executa o próximo item próprio.</p>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="stats">
+    <div class="card"><div class="stat-number">332</div><div class="small">agentes mapeados do documento</div></div>
+    <div class="card"><div class="stat-number">9</div><div class="small">macrodomínios de negócio</div></div>
+    <div class="card"><div class="stat-number">15</div><div class="small">ciclos recomendados para manter qualidade e merge sob controle</div></div>
+    <div class="card"><div class="stat-number">5</div><div class="small">fases padrão por ciclo/lote</div></div>
+  </section>
+
+  <section class="grid-2">
+    <div class="protocol">
+      <h2>Protocolo operacional 🍥</h2>
+      <div class="timeline">
+        <div class="step">
+          <strong>Execução 1</strong>
+          JULES e CODEX começam em paralelo, cada um atacando o seu primeiro item do Ciclo 1/Fase 1. Nada de um ficar esperando o outro coçando bits.
+        </div>
+        <div class="step">
+          <strong>Execução 2 em diante</strong>
+          Primeiro: validar a entrega anterior do outro agente. Segundo: executar o próximo item próprio. Isso mantém paralelismo sem virar um festival de merge conflitante.
+        </div>
+        <div class="step">
+          <strong>Regra fixa de papéis</strong>
+          Quando o item estiver na lane do CODEX, <strong>executor = CODEX</strong> e <strong>validador = JULES</strong>. Quando estiver na lane do JULES, <strong>executor = JULES</strong> e <strong>validador = CODEX</strong>.
+        </div>
+        <div class="step">
+          <strong>Gate de merge</strong>
+          Sem autoaprovação. Sem evidência, sem merge. Sem teste mínimo, sem merge. Sem contrato do agente e schema claro, sem merge.
+        </div>
+      </div>
+      <div class="note">
+        <strong>Recomendação de capacidade:</strong> para este catálogo, o melhor equilíbrio é trabalhar por <strong>lotes de domínio</strong>, não por agentes soltos. Por isso a recomendação sobe para <strong>15 ciclos</strong> em vez de 10: o volume é grande, os domínios são heterogêneos e há áreas com risco regulatório alto.
+      </div>
+    </div>
+
+    <div class="rules">
+      <h2>Critérios de esforço e governança</h2>
+      <ul>
+        <li><strong>Complexidade média-alta:</strong> marketing, pré-vendas e growth. Risco funcional relevante, mas menor risco regulatório.</li>
+        <li><strong>Complexidade alta:</strong> executivos, fechamento, CS, RevOps e BI. Exigem integração, métricas, contratos e observabilidade mais rigorosos.</li>
+        <li><strong>Complexidade muito alta:</strong> financeiro, jurídico, compliance, AML, KYC, fraude e controles internos. Aqui a margem para improviso é microscópica.</li>
+        <li><strong>Fase 1:</strong> decompor lote e definir fronteiras. <strong>Fase 2:</strong> contratos, schemas e guardrails. <strong>Fase 3:</strong> prompts, ferramentas e integrações. <strong>Fase 4:</strong> implementação + testes + docs. <strong>Fase 5:</strong> validação cruzada e merge gate.</li>
+        <li><strong>Unidade de esforço (UE):</strong> métrica relativa do peso do ciclo. Não é hora-homem; é sinalizador de risco, acoplamento e densidade técnica.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="domains">
+    <h2>Domínios identificados no catálogo</h2>
+    <div class="domain-grid">
+      
+    <div class="domain-card">
+      <div class="domain-head">
+        <h3>Executivos, C-Level e VPs</h3>
+        <span class="pill">51 agentes</span>
+      </div>
+      <p class="muted">Complexidade base: <strong>Alta</strong></p>
+      <details>
+        <summary>Ver agentes do domínio</summary>
+        <div class="tag-wrap">
+          <span class="tag">BoardPrep AI</span><span class="tag">MarketSentinel</span><span class="tag">CulturePulse</span><span class="tag">CrisisNavigator</span><span class="tag">CapitalAllocator</span><span class="tag">PipelineOracle</span><span class="tag">ChurnDeflector</span><span class="tag">PricingOptimizer</span><span class="tag">ExpansionMapper</span><span class="tag">QuotaArchitect</span><span class="tag">BrandGuardian</span><span class="tag">TrendCatcher</span><span class="tag">BudgetFluid</span><span class="tag">NarrativeWeaver</span><span class="tag">CompetitorX-Ray</span><span class="tag">CashFlowClairvoyant</span><span class="tag">AuditBot</span><span class="tag">TaxOptimizer</span><span class="tag">CapTableManager</span><span class="tag">SpendController</span><span class="tag">SentimentAggregator</span><span class="tag">JourneyArchitect</span><span class="tag">VIPConcierge</span><span class="tag">AdvocacyFinder</span><span class="tag">EscalationPredictor</span><span class="tag">Nota</span><span class="tag">BottleneckDetector</span><span class="tag">VendorNegotiator</span><span class="tag">SupplyChainSync</span><span class="tag">ComplianceEnforcer</span><span class="tag">ResourceBalancer</span><span class="tag">TerritoryMapper</span><span class="tag">RepCoach AI</span><span class="tag">ForecastRollup</span><span class="tag">DealDeskAutopilot</span><span class="tag">StrategicPartnerScout</span><span class="tag">ChannelMixer</span><span class="tag">AgencyAuditor</span><span class="tag">GlobalBrandLocalizer</span><span class="tag">MarketingTechArchitect</span><span class="tag">ExecutiveSummaryBot</span><span class="tag">RenewalForecastEngine</span><span class="tag">CapacityPlanner</span><span class="tag">TieringOptimizer</span><span class="tag">PlaybookGenerator</span><span class="tag">HealthScoreArchitect</span><span class="tag">BurnRateMonitor</span><span class="tag">ProcurementPolicyBot</span><span class="tag">FXRiskManager</span><span class="tag">BoardReportingAutomator</span><span class="tag">ScenarioModeler</span>
+        </div>
+      </details>
+    </div>
+    
+    <div class="domain-card">
+      <div class="domain-head">
+        <h3>Vendas e Prospecção</h3>
+        <span class="pill">30 agentes</span>
+      </div>
+      <p class="muted">Complexidade base: <strong>Média-Alta</strong></p>
+      <details>
+        <summary>Ver agentes do domínio</summary>
+        <div class="tag-wrap">
+          <span class="tag">InboundScorer</span><span class="tag">ObjectionCrusher</span><span class="tag">PersonalizationEngine</span><span class="tag">FollowUpGhost</span><span class="tag">CalendarSniper</span><span class="tag">TargetScraper</span><span class="tag">ColdCallScripter</span><span class="tag">TriggerEventWatcher</span><span class="tag">AccountMapper</span><span class="tag">VoicemailDropper</span><span class="tag">DataCleaner</span><span class="tag">IntentDecoder</span><span class="tag">WebinarNurturer</span><span class="tag">EnrichmentBot</span><span class="tag">RoutingTrafficCop</span><span class="tag">MultiThreader</span><span class="tag">AnnualReportAnalyzer</span><span class="tag">CompetitorDisplacement</span><span class="tag">GatekeeperBypass</span><span class="tag">StakeholderPersonaGenerator</span><span class="tag">NicheExplorer</span><span class="tag">PartnerEcosystemScout</span><span class="tag">ContentToLead</span><span class="tag">EventQualifier</span><span class="tag">VerticalTranslator</span><span class="tag">ActivityAnalyzer</span><span class="tag">TranscriptCoach</span><span class="tag">GamificationMaster</span><span class="tag">RampUpAssistant</span><span class="tag">ConversionForecaster</span>
+        </div>
+      </details>
+    </div>
+    
+    <div class="domain-card">
+      <div class="domain-head">
+        <h3>Vendas e Fechamento</h3>
+        <span class="pill">40 agentes</span>
+      </div>
+      <p class="muted">Complexidade base: <strong>Alta</strong></p>
+      <details>
+        <summary>Ver agentes do domínio</summary>
+        <div class="tag-wrap">
+          <span class="tag">DeckCustomizer</span><span class="tag">MutualActionTracker</span><span class="tag">ContractDrafter</span><span class="tag">ROICalculatorBuilder</span><span class="tag">ObjectionFlashcard</span><span class="tag">OrgNav</span><span class="tag">RFPAutoResponder</span><span class="tag">ExecSummaryGenerator</span><span class="tag">MultiYearDealModeller</span><span class="tag">ProcurementHacker</span><span class="tag">FastQuoter</span><span class="tag">DemoScripter</span><span class="tag">GhostingPreventer</span><span class="tag">DiscountApprover</span><span class="tag">PaymentLinkSender</span><span class="tag">ProductFeedbackLooper</span><span class="tag">ICPRefiner</span><span class="tag">PlaybookCreator</span><span class="tag">EarlyAdopterNurturer</span><span class="tag">PricingTester</span><span class="tag">DemoSandboxer</span><span class="tag">SecurityQuestionnaireFiller</span><span class="tag">ArchitectureDiagrammer</span><span class="tag">TechObjectionResolver</span><span class="tag">PoCTracker</span><span class="tag">ValueAligner</span><span class="tag">UseCaseGenerator</span><span class="tag">ROIScenarioModeler</span><span class="tag">TechStackAuditor</span><span class="tag">ExecutiveDemoCurator</span><span class="tag">Gerente Comercial PipelineInspector</span><span class="tag">OneOnOnePrep</span><span class="tag">DealAtRiskAlerter</span><span class="tag">WinLossAnalyzer</span><span class="tag">DiscountLeakGuard</span><span class="tag">MarketExpansionModeler</span><span class="tag">QuotaSetter</span><span class="tag">CompPlanCalculator</span><span class="tag">LeaderboardBroadcaster</span><span class="tag">StrategicAllianceScout</span>
+        </div>
+      </details>
+    </div>
+    
+    <div class="domain-card">
+      <div class="domain-head">
+        <h3>Marketing Growth</h3>
+        <span class="pill">44 agentes</span>
+      </div>
+      <p class="muted">Complexidade base: <strong>Média-Alta</strong></p>
+      <details>
+        <summary>Ver agentes do domínio</summary>
+        <div class="tag-wrap">
+          <span class="tag">ABTestAutomator</span><span class="tag">ViralLoopTracker</span><span class="tag">ActivationOptimizer</span><span class="tag">CACLTVModeler</span><span class="tag">AdCopyMachine</span><span class="tag">LandingPageMorpher</span><span class="tag">WebinarPromoter</span><span class="tag">LeadMagnetCreator</span><span class="tag">CampaignOrchestrator</span><span class="tag">BattlecardUpdater</span><span class="tag">ReleaseNoteWriter</span><span class="tag">PositioningTester</span><span class="tag">PersonaSync</span><span class="tag">LaunchPlanner</span><span class="tag">BidAutoAdjuster</span><span class="tag">KeywordOpportunitySpotter</span><span class="tag">AdFatigueMonitor</span><span class="tag">CreativeAssetTester</span><span class="tag">ROASMaximizer</span><span class="tag">TopicClusterPlanner</span><span class="tag">SEODraftWriter</span><span class="tag">PlagiarismToneChecker</span><span class="tag">ContentRepurposer</span><span class="tag">DistributionAutomator</span><span class="tag">SubjectLineTester</span><span class="tag">ChurnWinBackSequencer</span><span class="tag">DripCampaignTrigger</span><span class="tag">NewsletterCurator</span><span class="tag">UnsubscribePredictor</span><span class="tag">MarTechSync</span><span class="tag">DataHygieneMonitor</span><span class="tag">UTMBuilderBot</span><span class="tag">LeadRoutingTroubleshooter</span><span class="tag">DashboardAutomator</span><span class="tag">BacklinkScouter</span><span class="tag">OnPageOptimizer</span><span class="tag">CannibalizationDetector</span><span class="tag">SERPVolatilityTracker</span><span class="tag">SchemaMarkupGenerator</span><span class="tag">BrandGuidelineEnforcer</span><span class="tag">PRScraper</span><span class="tag">SentimentShiftAlerter</span><span class="tag">InfluencerVettor</span><span class="tag">CrisisCommsDrafter</span>
+        </div>
+      </details>
+    </div>
+    
+    <div class="domain-card">
+      <div class="domain-head">
+        <h3>Customer Success e Suporte</h3>
+        <span class="pill">35 agentes</span>
+      </div>
+      <p class="muted">Complexidade base: <strong>Alta</strong></p>
+      <details>
+        <summary>Ver agentes do domínio</summary>
+        <div class="tag-wrap">
+          <span class="tag">QBRDeckBuilder</span><span class="tag">HealthScoreTrigger</span><span class="tag">UpsellPrompt</span><span class="tag">BestPracticeRecommender</span><span class="tag">ExecutiveSponsorTracker</span><span class="tag">ProjectPlanTracker</span><span class="tag">APIKeyConfigurator</span><span class="tag">DataMigrationValidator</span><span class="tag">MilestoneChaser</span><span class="tag">DelayEscalator</span><span class="tag">WelcomeSequencer</span><span class="tag">AhaMomentTracker</span><span class="tag">TrainingVideoRecommender</span><span class="tag">FAQAutoResponder</span><span class="tag">AdoptionMetricAnalyzer</span><span class="tag">TicketClassifier</span><span class="tag">SemanticSearchKB</span><span class="tag">L1AutoResolver</span><span class="tag">L3BugReplicator</span><span class="tag">AngryCustomerEscalator</span><span class="tag">SLAMonitor</span><span class="tag">PatchUpdateAlerter</span><span class="tag">ScalabilityPredictor</span><span class="tag">CustomScriptGenerator</span><span class="tag">OutageCommunicator</span><span class="tag">RenewalContractGenerator</span><span class="tag">CrossSellMapper</span><span class="tag">RelationshipMatrixBuilder</span><span class="tag">PricingTierRecommender</span><span class="tag">WhiteSpaceAnalyzer</span><span class="tag">CSATNPSAggregator</span><span class="tag">TicketBacklogAnalyzer</span><span class="tag">KBGapIdentifier</span><span class="tag">ShiftScheduler</span><span class="tag">RefundProcessor</span>
+        </div>
+      </details>
+    </div>
+    
+    <div class="domain-card">
+      <div class="domain-head">
+        <h3>Operações e Inteligência (RevOps)</h3>
+        <span class="pill">31 agentes</span>
+      </div>
+      <p class="muted">Complexidade base: <strong>Alta</strong></p>
+      <details>
+        <summary>Ver agentes do domínio</summary>
+        <div class="tag-wrap">
+          <span class="tag">FunnelLeakDetector</span><span class="tag">DataSiloBridger</span><span class="tag">ToolROIAnalyzer</span><span class="tag">GTMAlignmentScorer</span><span class="tag">ProcessBottleneckAlerter</span><span class="tag">Mapeia</span><span class="tag">CRMCleanser</span><span class="tag">TerritoryBalancer</span><span class="tag">QuotaAttainmentTracker</span><span class="tag">ValidationRuleEnforcer</span><span class="tag">DuplicateMerger</span><span class="tag">MicroLearningCreator</span><span class="tag">VoicePitchGrader</span><span class="tag">PlaybookUpdater</span><span class="tag">CompetitorIntelBroadcaster</span><span class="tag">OnboardingRampTracker</span><span class="tag">MarginCalculator</span><span class="tag">NonStandardFlag</span><span class="tag">DiscountWaterfallModeler</span><span class="tag">LegalClauseMatcher</span><span class="tag">ApprovalWorkflowRouter</span><span class="tag">APIIntegrationBuilder</span><span class="tag">LeadScoringModeler</span><span class="tag">WebhookMonitor</span><span class="tag">CustomCRMUIBuilder</span><span class="tag">DataEnrichmentAutomator</span><span class="tag">CohortAnalyzer</span><span class="tag">ForecastingModeler</span><span class="tag">PriceDiscountImpact</span><span class="tag">ChannelAttritionPredictor</span><span class="tag">ACVGrowthTracker</span>
+        </div>
+      </details>
+    </div>
+    
+    <div class="domain-card">
+      <div class="domain-head">
+        <h3>Análise de Dados e BI</h3>
+        <span class="pill">30 agentes</span>
+      </div>
+      <p class="muted">Complexidade base: <strong>Alta</strong></p>
+      <details>
+        <summary>Ver agentes do domínio</summary>
+        <div class="tag-wrap">
+          <span class="tag">RequirementsGatherer</span><span class="tag">ProcessFlowMapper</span><span class="tag">UserStoryWriter</span><span class="tag">StakeholderUpdateAutomator</span><span class="tag">ScopeCreepDetector</span><span class="tag">SQLQueryGenerator</span><span class="tag">AnomalyDetector</span><span class="tag">DashboardAutoFreshener</span><span class="tag">DataCleaningBot</span><span class="tag">StatSignificanceTester</span><span class="tag">ARRBridgeBuilder</span><span class="tag">NetRetentionModeler</span><span class="tag">ChurnCohortIsolator</span><span class="tag">PricingElasticityTester</span><span class="tag">PipelineVelocityTracker</span><span class="tag">JourneyDropOffLocator</span><span class="tag">FeatureHeatmapper</span><span class="tag">ABTestSynthesizer</span><span class="tag">StickinessTracker</span><span class="tag">SessionReplaySummarizer</span><span class="tag">MarketShareEstimator</span><span class="tag">MacroFactorTracker</span><span class="tag">CompetitorFinancialScraper</span><span class="tag">StrategicKPIAggregator</span><span class="tag">GeospatialExpansionMapper</span><span class="tag">AttributionModeler</span><span class="tag">MediaMixOptimizer</span><span class="tag">CampaignDecayPredictor</span><span class="tag">AudienceSegmentDiscoverer</span><span class="tag">LTVbyChannelCalculator</span>
+        </div>
+      </details>
+    </div>
+    
+    <div class="domain-card">
+      <div class="domain-head">
+        <h3>Financeiro, Jurídico e Administrativo</h3>
+        <span class="pill">35 agentes</span>
+      </div>
+      <p class="muted">Complexidade base: <strong>Muito Alta</strong></p>
+      <details>
+        <summary>Ver agentes do domínio</summary>
+        <div class="tag-wrap">
+          <span class="tag">ContractRedliner</span><span class="tag">IPInfringementScraper</span><span class="tag">RegulatoryChangeAlerter</span><span class="tag">NDAAutoSigner</span><span class="tag">RiskExposureQuantifier</span><span class="tag">InvoiceGenerator</span><span class="tag">ProrationCalculator</span><span class="tag">FailedPaymentRetrier</span><span class="tag">TaxExemptionVerifier</span><span class="tag">DisputedChargeAggregator</span><span class="tag">DunningAutomator</span><span class="tag">PaymentPlanNegotiator</span><span class="tag">PromiseToPayTracker</span><span class="tag">BadDebtPredictor</span><span class="tag">CollectionAgencyRouter</span><span class="tag">CloudSpendOptimizer</span><span class="tag">SaaSLicenseAuditor</span><span class="tag">InstanceRightSizer</span><span class="tag">BudgetVariancePinger</span><span class="tag">MultiCloudCostModeler</span><span class="tag">CashAppMatcher</span><span class="tag">BankReconciliationBot</span><span class="tag">AgingReportSender</span><span class="tag">CreditHoldReleaser</span><span class="tag">RemittanceExtractor</span><span class="tag">CreditScoreFetcher</span><span class="tag">FinancialRatioCalculator</span><span class="tag">CreditLimitRecommender</span><span class="tag">BankruptcyRiskMonitor</span><span class="tag">TradeReferenceChecker</span><span class="tag">Controller MonthEndCloseAutomator</span><span class="tag">AccrualEngine</span><span class="tag">AuditTrailBuilder</span><span class="tag">GLAnomalyDetector</span><span class="tag">ComplianceChecklistEnforcer</span>
+        </div>
+      </details>
+    </div>
+    
+    <div class="domain-card">
+      <div class="domain-head">
+        <h3>Fintech, Risco e Compliance</h3>
+        <span class="pill">36 agentes</span>
+      </div>
+      <p class="muted">Complexidade base: <strong>Muito Alta</strong></p>
+      <details>
+        <summary>Ver agentes do domínio</summary>
+        <div class="tag-wrap">
+          <span class="tag">PolicyMappingBot</span><span class="tag">RegulatoryTrainingTracker</span><span class="tag">SanctionsScreener</span><span class="tag">CommsSurveillanceBot</span><span class="tag">AuditPrepEngine</span><span class="tag">SARDrafter</span><span class="tag">TransactionLinkAnalyzer</span><span class="tag">MoneyMuleDetector</span><span class="tag">HighRiskJurisdictionPinger</span><span class="tag">CryptoTracingBot</span><span class="tag">IDVerificationMatcher</span><span class="tag">LivenessCheckAnalyzer</span><span class="tag">UBOMapper</span><span class="tag">AddressProofValidator</span><span class="tag">PEPScreener</span><span class="tag">ChargebackDisputeAutomator</span><span class="tag">VelocityRuleEngine</span><span class="tag">SyntheticIdentityDetector</span><span class="tag">DeviceFingerprintMatcher</span><span class="tag">Risk Underwriter AltDataScorer</span><span class="tag">DefaultProbabilityModeler</span><span class="tag">AutoDecisionEngine</span><span class="tag">LimitDecreaseRecommender</span><span class="tag">CentralBankXMLGenerator</span><span class="tag">CapitalAdequacyCalculator</span><span class="tag">LiquidityRatioMonitor</span><span class="tag">DeadlineTracker</span><span class="tag">StressTestModeler</span><span class="tag">ProcessWalkthroughAutomator</span><span class="tag">AccessRightAuditor</span><span class="tag">RemediationPlanTracker</span><span class="tag">TransactionHoldReviewer</span><span class="tag">SLAEscalator</span><span class="tag">FalsePositiveReducer</span><span class="tag">CapacityModeler</span><span class="tag">IncidentPostMortemDrafter</span>
+        </div>
+      </details>
+    </div>
+    
+    </div>
+  </section>
+
+  <section class="cycles">
+    <h2>Plano paralelo por ciclo</h2>
+    <div class="toolbar">
+      <input id="search" type="text" placeholder="Filtrar por agente, domínio ou ciclo...">
+      <span class="pill">15 ciclos</span>
+      <span class="pill">validação cruzada obrigatória</span>
+      <span class="pill">lotes por domínio</span>
+    </div>
+    <div class="cycle-list" id="cycleList">
+      
+    <section class="cycle-card" data-cycle="1">
+      <div class="cycle-top">
+        <div>
+          <h3>Ciclo 1 — Executivos, C-Level e VPs • Lote 1/2</h3>
+          <p>Arquitetura executiva, orquestração e direção</p>
+        </div>
+        <div class="cycle-metrics">
+          <span class="pill">26 agentes</span>
+          <span class="pill effort">UE 76</span>
+          <span class="pill">Alta</span>
+        </div>
+      </div>
+
+      <div class="protocol-grid">
+        <div class="lane codex">
+          <h4>Lane CODEX</h4>
+          <ol>
+            <li><strong>Execução 1:</strong> executar o primeiro item do ciclo/lote do CODEX.</li>
+            <li><strong>Execução 2+:</strong> validar o último pacote do JULES e depois executar o próximo item próprio.</li>
+            <li>Gerar artefatos reais: código, schemas, contratos, testes, seeds, filas, APIs, integrações.</li>
+            <li>Fechar cada microentrega com diff objetivo, evidência e próximos passos.</li>
+          </ol>
+        </div>
+        <div class="lane jules">
+          <h4>Lane JULES</h4>
+          <ol>
+            <li><strong>Execução 1:</strong> executar o primeiro item do ciclo/lote do JULES.</li>
+            <li><strong>Execução 2+:</strong> validar o último pacote do CODEX e depois executar o próximo item próprio.</li>
+            <li>Gerar arquitetura, prompts, contratos de agente, critérios de aceite, segurança e governança.</li>
+            <li>Bloquear merge se faltar rastreabilidade, isolamento, observabilidade ou teste mínimo.</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="phases">
+        <div class="phase"><strong>F1</strong><span>Descoberta, escopo e decomposição do lote</span></div>
+        <div class="phase"><strong>F2</strong><span>Contrato do agente, IO, guardrails e RACI</span></div>
+        <div class="phase"><strong>F3</strong><span>Prompting, memória, ferramentas e integrações</span></div>
+        <div class="phase"><strong>F4</strong><span>Implementação, testes, observabilidade e docs</span></div>
+        <div class="phase"><strong>F5</strong><span>Validação cruzada, merge gate e handoff</span></div>
+      </div>
+
+      <details>
+        <summary>Agentes do ciclo</summary>
+        <div class="tag-wrap">
+          <span class="tag agent-tag">BoardPrep AI</span><span class="tag agent-tag">MarketSentinel</span><span class="tag agent-tag">CulturePulse</span><span class="tag agent-tag">CrisisNavigator</span><span class="tag agent-tag">CapitalAllocator</span><span class="tag agent-tag">PipelineOracle</span><span class="tag agent-tag">ChurnDeflector</span><span class="tag agent-tag">PricingOptimizer</span><span class="tag agent-tag">ExpansionMapper</span><span class="tag agent-tag">QuotaArchitect</span><span class="tag agent-tag">BrandGuardian</span><span class="tag agent-tag">TrendCatcher</span><span class="tag agent-tag">BudgetFluid</span><span class="tag agent-tag">NarrativeWeaver</span><span class="tag agent-tag">CompetitorX-Ray</span><span class="tag agent-tag">CashFlowClairvoyant</span><span class="tag agent-tag">AuditBot</span><span class="tag agent-tag">TaxOptimizer</span><span class="tag agent-tag">CapTableManager</span><span class="tag agent-tag">SpendController</span><span class="tag agent-tag">SentimentAggregator</span><span class="tag agent-tag">JourneyArchitect</span><span class="tag agent-tag">VIPConcierge</span><span class="tag agent-tag">AdvocacyFinder</span><span class="tag agent-tag">EscalationPredictor</span><span class="tag agent-tag">Nota</span>
+        </div>
+      </details>
+    </section>
+    
+    <section class="cycle-card" data-cycle="2">
+      <div class="cycle-top">
+        <div>
+          <h3>Ciclo 2 — Executivos, C-Level e VPs • Lote 2/2</h3>
+          <p>Arquitetura executiva, orquestração e direção</p>
+        </div>
+        <div class="cycle-metrics">
+          <span class="pill">25 agentes</span>
+          <span class="pill effort">UE 76</span>
+          <span class="pill">Alta</span>
+        </div>
+      </div>
+
+      <div class="protocol-grid">
+        <div class="lane codex">
+          <h4>Lane CODEX</h4>
+          <ol>
+            <li><strong>Execução 1:</strong> executar o primeiro item do ciclo/lote do CODEX.</li>
+            <li><strong>Execução 2+:</strong> validar o último pacote do JULES e depois executar o próximo item próprio.</li>
+            <li>Gerar artefatos reais: código, schemas, contratos, testes, seeds, filas, APIs, integrações.</li>
+            <li>Fechar cada microentrega com diff objetivo, evidência e próximos passos.</li>
+          </ol>
+        </div>
+        <div class="lane jules">
+          <h4>Lane JULES</h4>
+          <ol>
+            <li><strong>Execução 1:</strong> executar o primeiro item do ciclo/lote do JULES.</li>
+            <li><strong>Execução 2+:</strong> validar o último pacote do CODEX e depois executar o próximo item próprio.</li>
+            <li>Gerar arquitetura, prompts, contratos de agente, critérios de aceite, segurança e governança.</li>
+            <li>Bloquear merge se faltar rastreabilidade, isolamento, observabilidade ou teste mínimo.</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="phases">
+        <div class="phase"><strong>F1</strong><span>Descoberta, escopo e decomposição do lote</span></div>
+        <div class="phase"><strong>F2</strong><span>Contrato do agente, IO, guardrails e RACI</span></div>
+        <div class="phase"><strong>F3</strong><span>Prompting, memória, ferramentas e integrações</span></div>
+        <div class="phase"><strong>F4</strong><span>Implementação, testes, observabilidade e docs</span></div>
+        <div class="phase"><strong>F5</strong><span>Validação cruzada, merge gate e handoff</span></div>
+      </div>
+
+      <details>
+        <summary>Agentes do ciclo</summary>
+        <div class="tag-wrap">
+          <span class="tag agent-tag">BottleneckDetector</span><span class="tag agent-tag">VendorNegotiator</span><span class="tag agent-tag">SupplyChainSync</span><span class="tag agent-tag">ComplianceEnforcer</span><span class="tag agent-tag">ResourceBalancer</span><span class="tag agent-tag">TerritoryMapper</span><span class="tag agent-tag">RepCoach AI</span><span class="tag agent-tag">ForecastRollup</span><span class="tag agent-tag">DealDeskAutopilot</span><span class="tag agent-tag">StrategicPartnerScout</span><span class="tag agent-tag">ChannelMixer</span><span class="tag agent-tag">AgencyAuditor</span><span class="tag agent-tag">GlobalBrandLocalizer</span><span class="tag agent-tag">MarketingTechArchitect</span><span class="tag agent-tag">ExecutiveSummaryBot</span><span class="tag agent-tag">RenewalForecastEngine</span><span class="tag agent-tag">CapacityPlanner</span><span class="tag agent-tag">TieringOptimizer</span><span class="tag agent-tag">PlaybookGenerator</span><span class="tag agent-tag">HealthScoreArchitect</span><span class="tag agent-tag">BurnRateMonitor</span><span class="tag agent-tag">ProcurementPolicyBot</span><span class="tag agent-tag">FXRiskManager</span><span class="tag agent-tag">BoardReportingAutomator</span><span class="tag agent-tag">ScenarioModeler</span>
+        </div>
+      </details>
+    </section>
+    
+    <section class="cycle-card" data-cycle="3">
+      <div class="cycle-top">
+        <div>
+          <h3>Ciclo 3 — Vendas e Prospecção • Lote 1/2</h3>
+          <p>Pré-vendas, prospecção e roteamento</p>
+        </div>
+        <div class="cycle-metrics">
+          <span class="pill">15 agentes</span>
+          <span class="pill effort">UE 56</span>
+          <span class="pill">Média-Alta</span>
+        </div>
+      </div>
+
+      <div class="protocol-grid">
+        <div class="lane codex">
+          <h4>Lane CODEX</h4>
+          <ol>
+            <li><strong>Execução 1:</strong> executar o primeiro item do ciclo/lote do CODEX.</li>
+            <li><strong>Execução 2+:</strong> validar o último pacote do JULES e depois executar o próximo item próprio.</li>
+            <li>Gerar artefatos reais: código, schemas, contratos, testes, seeds, filas, APIs, integrações.</li>
+            <li>Fechar cada microentrega com diff objetivo, evidência e próximos passos.</li>
+          </ol>
+        </div>
+        <div class="lane jules">
+          <h4>Lane JULES</h4>
+          <ol>
+            <li><strong>Execução 1:</strong> executar o primeiro item do ciclo/lote do JULES.</li>
+            <li><strong>Execução 2+:</strong> validar o último pacote do CODEX e depois executar o próximo item próprio.</li>
+            <li>Gerar arquitetura, prompts, contratos de agente, critérios de aceite, segurança e governança.</li>
+            <li>Bloquear merge se faltar rastreabilidade, isolamento, observabilidade ou teste mínimo.</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="phases">
+        <div class="phase"><strong>F1</strong><span>Descoberta, escopo e decomposição do lote</span></div>
+        <div class="phase"><strong>F2</strong><span>Contrato do agente, IO, guardrails e RACI</span></div>
+        <div class="phase"><strong>F3</strong><span>Prompting, memória, ferramentas e integrações</span></div>
+        <div class="phase"><strong>F4</strong><span>Implementação, testes, observabilidade e docs</span></div>
+        <div class="phase"><strong>F5</strong><span>Validação cruzada, merge gate e handoff</span></div>
+      </div>
+
+      <details>
+        <summary>Agentes do ciclo</summary>
+        <div class="tag-wrap">
+          <span class="tag agent-tag">InboundScorer</span><span class="tag agent-tag">ObjectionCrusher</span><span class="tag agent-tag">PersonalizationEngine</span><span class="tag agent-tag">FollowUpGhost</span><span class="tag agent-tag">CalendarSniper</span><span class="tag agent-tag">TargetScraper</span><span class="tag agent-tag">ColdCallScripter</span><span class="tag agent-tag">TriggerEventWatcher</span><span class="tag agent-tag">AccountMapper</span><span class="tag agent-tag">VoicemailDropper</span><span class="tag agent-tag">DataCleaner</span><span class="tag agent-tag">IntentDecoder</span><span class="tag agent-tag">WebinarNurturer</span><span class="tag agent-tag">EnrichmentBot</span><span class="tag agent-tag">RoutingTrafficCop</span>
+        </div>
+      </details>
+    </section>
+    
+    <section class="cycle-card" data-cycle="4">
+      <div class="cycle-top">
+        <div>
+          <h3>Ciclo 4 — Vendas e Prospecção • Lote 2/2</h3>
+          <p>Pré-vendas, prospecção e roteamento</p>
+        </div>
+        <div class="cycle-metrics">
+          <span class="pill">15 agentes</span>
+          <span class="pill effort">UE 56</span>
+          <span class="pill">Média-Alta</span>
+        </div>
+      </div>
+
+      <div class="protocol-grid">
+        <div class="lane codex">
+          <h4>Lane CODEX</h4>
+          <ol>
+            <li><strong>Execução 1:</strong> executar o primeiro item do ciclo/lote do CODEX.</li>
+            <li><strong>Execução 2+:</strong> validar o último pacote do JULES e depois executar o próximo item próprio.</li>
+            <li>Gerar artefatos reais: código, schemas, contratos, testes, seeds, filas, APIs, integrações.</li>
+            <li>Fechar cada microentrega com diff objetivo, evidência e próximos passos.</li>
+          </ol>
+        </div>
+        <div class="lane jules">
+          <h4>Lane JULES</h4>
+          <ol>
+            <li><strong>Execução 1:</strong> executar o primeiro item do ciclo/lote do JULES.</li>
+            <li><strong>Execução 2+:</strong> validar o último pacote do CODEX e depois executar o próximo item próprio.</li>
+            <li>Gerar arquitetura, prompts, contratos de agente, critérios de aceite, segurança e governança.</li>
+            <li>Bloquear merge se faltar rastreabilidade, isolamento, observabilidade ou teste mínimo.</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="phases">
+        <div class="phase"><strong>F1</strong><span>Descoberta, escopo e decomposição do lote</span></div>
+        <div class="phase"><strong>F2</strong><span>Contrato do agente, IO, guardrails e RACI</span></div>
+        <div class="phase"><strong>F3</strong><span>Prompting, memória, ferramentas e integrações</span></div>
+        <div class="phase"><strong>F4</strong><span>Implementação, testes, observabilidade e docs</span></div>
+        <div class="phase"><strong>F5</strong><span>Validação cruzada, merge gate e handoff</span></div>
+      </div>
+
+      <details>
+        <summary>Agentes do ciclo</summary>
+        <div class="tag-wrap">
+          <span class="tag agent-tag">MultiThreader</span><span class="tag agent-tag">AnnualReportAnalyzer</span><span class="tag agent-tag">CompetitorDisplacement</span><span class="tag agent-tag">GatekeeperBypass</span><span class="tag agent-tag">StakeholderPersonaGenerator</span><span class="tag agent-tag">NicheExplorer</span><span class="tag agent-tag">PartnerEcosystemScout</span><span class="tag agent-tag">ContentToLead</span><span class="tag agent-tag">EventQualifier</span><span class="tag agent-tag">VerticalTranslator</span><span class="tag agent-tag">ActivityAnalyzer</span><span class="tag agent-tag">TranscriptCoach</span><span class="tag agent-tag">GamificationMaster</span><span class="tag agent-tag">RampUpAssistant</span><span class="tag agent-tag">ConversionForecaster</span>
+        </div>
+      </details>
+    </section>
+    
+    <section class="cycle-card" data-cycle="5">
+      <div class="cycle-top">
+        <div>
+          <h3>Ciclo 5 — Vendas e Fechamento • Lote 1/2</h3>
+          <p>Fechamento, SE, inside sales e gestão comercial</p>
+        </div>
+        <div class="cycle-metrics">
+          <span class="pill">20 agentes</span>
+          <span class="pill effort">UE 72</span>
+          <span class="pill">Alta</span>
+        </div>
+      </div>
+
+      <div class="protocol-grid">
+        <div class="lane codex">
+          <h4>Lane CODEX</h4>
+          <ol>
+            <li><strong>Execução 1:</strong> executar o primeiro item do ciclo/lote do CODEX.</li>
+            <li><strong>Execução 2+:</strong> validar o último pacote do JULES e depois executar o próximo item próprio.</li>
+            <li>Gerar artefatos reais: código, schemas, contratos, testes, seeds, filas, APIs, integrações.</li>
+            <li>Fechar cada microentrega com diff objetivo, evidência e próximos passos.</li>
+          </ol>
+        </div>
+        <div class="lane jules">
+          <h4>Lane JULES</h4>
+          <ol>
+            <li><strong>Execução 1:</strong> executar o primeiro item do ciclo/lote do JULES.</li>
+            <li><strong>Execução 2+:</strong> validar o último pacote do CODEX e depois executar o próximo item próprio.</li>
+            <li>Gerar arquitetura, prompts, contratos de agente, critérios de aceite, segurança e governança.</li>
+            <li>Bloquear merge se faltar rastreabilidade, isolamento, observabilidade ou teste mínimo.</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="phases">
+        <div class="phase"><strong>F1</strong><span>Descoberta, escopo e decomposição do lote</span></div>
+        <div class="phase"><strong>F2</strong><span>Contrato do agente, IO, guardrails e RACI</span></div>
+        <div class="phase"><strong>F3</strong><span>Prompting, memória, ferramentas e integrações</span></div>
+        <div class="phase"><strong>F4</strong><span>Implementação, testes, observabilidade e docs</span></div>
+        <div class="phase"><strong>F5</strong><span>Validação cruzada, merge gate e handoff</span></div>
+      </div>
+
+      <details>
+        <summary>Agentes do ciclo</summary>
+        <div class="tag-wrap">
+          <span class="tag agent-tag">DeckCustomizer</span><span class="tag agent-tag">MutualActionTracker</span><span class="tag agent-tag">ContractDrafter</span><span class="tag agent-tag">ROICalculatorBuilder</span><span class="tag agent-tag">ObjectionFlashcard</span><span class="tag agent-tag">OrgNav</span><span class="tag agent-tag">RFPAutoResponder</span><span class="tag agent-tag">ExecSummaryGenerator</span><span class="tag agent-tag">MultiYearDealModeller</span><span class="tag agent-tag">ProcurementHacker</span><span class="tag agent-tag">FastQuoter</span><span class="tag agent-tag">DemoScripter</span><span class="tag agent-tag">GhostingPreventer</span><span class="tag agent-tag">DiscountApprover</span><span class="tag agent-tag">PaymentLinkSender</span><span class="tag agent-tag">ProductFeedbackLooper</span><span class="tag agent-tag">ICPRefiner</span><span class="tag agent-tag">PlaybookCreator</span><span class="tag agent-tag">EarlyAdopterNurturer</span><span class="tag agent-tag">PricingTester</span>
+        </div>
+      </details>
+    </section>
+    
+    <section class="cycle-card" data-cycle="6">
+      <div class="cycle-top">
+        <div>
+          <h3>Ciclo 6 — Vendas e Fechamento • Lote 2/2</h3>
+          <p>Fechamento, SE, inside sales e gestão comercial</p>
+        </div>
+        <div class="cycle-metrics">
+          <span class="pill">20 agentes</span>
+          <span class="pill effort">UE 72</span>
+          <span class="pill">Alta</span>
+        </div>
+      </div>
+
+      <div class="protocol-grid">
+        <div class="lane codex">
+          <h4>Lane CODEX</h4>
+          <ol>
+            <li><strong>Execução 1:</strong> executar o primeiro item do ciclo/lote do CODEX.</li>
+            <li><strong>Execução 2+:</strong> validar o último pacote do JULES e depois executar o próximo item próprio.</li>
+            <li>Gerar artefatos reais: código, schemas, contratos, testes, seeds, filas, APIs, integrações.</li>
+            <li>Fechar cada microentrega com diff objetivo, evidência e próximos passos.</li>
+          </ol>
+        </div>
+        <div class="lane jules">
+          <h4>Lane JULES</h4>
+          <ol>
+            <li><strong>Execução 1:</strong> executar o primeiro item do ciclo/lote do JULES.</li>
+            <li><strong>Execução 2+:</strong> validar o último pacote do CODEX e depois executar o próximo item próprio.</li>
+            <li>Gerar arquitetura, prompts, contratos de agente, critérios de aceite, segurança e governança.</li>
+            <li>Bloquear merge se faltar rastreabilidade, isolamento, observabilidade ou teste mínimo.</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="phases">
+        <div class="phase"><strong>F1</strong><span>Descoberta, escopo e decomposição do lote</span></div>
+        <div class="phase"><strong>F2</strong><span>Contrato do agente, IO, guardrails e RACI</span></div>
+        <div class="phase"><strong>F3</strong><span>Prompting, memória, ferramentas e integrações</span></div>
+        <div class="phase"><strong>F4</strong><span>Implementação, testes, observabilidade e docs</span></div>
+        <div class="phase"><strong>F5</strong><span>Validação cruzada, merge gate e handoff</span></div>
+      </div>
+
+      <details>
+        <summary>Agentes do ciclo</summary>
+        <div class="tag-wrap">
+          <span class="tag agent-tag">DemoSandboxer</span><span class="tag agent-tag">SecurityQuestionnaireFiller</span><span class="tag agent-tag">ArchitectureDiagrammer</span><span class="tag agent-tag">TechObjectionResolver</span><span class="tag agent-tag">PoCTracker</span><span class="tag agent-tag">ValueAligner</span><span class="tag agent-tag">UseCaseGenerator</span><span class="tag agent-tag">ROIScenarioModeler</span><span class="tag agent-tag">TechStackAuditor</span><span class="tag agent-tag">ExecutiveDemoCurator</span><span class="tag agent-tag">Gerente Comercial PipelineInspector</span><span class="tag agent-tag">OneOnOnePrep</span><span class="tag agent-tag">DealAtRiskAlerter</span><span class="tag agent-tag">WinLossAnalyzer</span><span class="tag agent-tag">DiscountLeakGuard</span><span class="tag agent-tag">MarketExpansionModeler</span><span class="tag agent-tag">QuotaSetter</span><span class="tag agent-tag">CompPlanCalculator</span><span class="tag agent-tag">LeaderboardBroadcaster</span><span class="tag agent-tag">StrategicAllianceScout</span>
+        </div>
+      </details>
+    </section>
+    
+    <section class="cycle-card" data-cycle="7">
+      <div class="cycle-top">
+        <div>
+          <h3>Ciclo 7 — Marketing Growth • Lote 1/2</h3>
+          <p>Growth, conteúdo, mídia e lifecycle</p>
+        </div>
+        <div class="cycle-metrics">
+          <span class="pill">22 agentes</span>
+          <span class="pill effort">UE 60</span>
+          <span class="pill">Média-Alta</span>
+        </div>
+      </div>
+
+      <div class="protocol-grid">
+        <div class="lane codex">
+          <h4>Lane CODEX</h4>
+          <ol>
+            <li><strong>Execução 1:</strong> executar o primeiro item do ciclo/lote do CODEX.</li>
+            <li><strong>Execução 2+:</strong> validar o último pacote do JULES e depois executar o próximo item próprio.</li>
+            <li>Gerar artefatos reais: código, schemas, contratos, testes, seeds, filas, APIs, integrações.</li>
+            <li>Fechar cada microentrega com diff objetivo, evidência e próximos passos.</li>
+          </ol>
+        </div>
+        <div class="lane jules">
+          <h4>Lane JULES</h4>
+          <ol>
+            <li><strong>Execução 1:</strong> executar o primeiro item do ciclo/lote do JULES.</li>
+            <li><strong>Execução 2+:</strong> validar o último pacote do CODEX e depois executar o próximo item próprio.</li>
+            <li>Gerar arquitetura, prompts, contratos de agente, critérios de aceite, segurança e governança.</li>
+            <li>Bloquear merge se faltar rastreabilidade, isolamento, observabilidade ou teste mínimo.</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="phases">
+        <div class="phase"><strong>F1</strong><span>Descoberta, escopo e decomposição do lote</span></div>
+        <div class="phase"><strong>F2</strong><span>Contrato do agente, IO, guardrails e RACI</span></div>
+        <div class="phase"><strong>F3</strong><span>Prompting, memória, ferramentas e integrações</span></div>
+        <div class="phase"><strong>F4</strong><span>Implementação, testes, observabilidade e docs</span></div>
+        <div class="phase"><strong>F5</strong><span>Validação cruzada, merge gate e handoff</span></div>
+      </div>
+
+      <details>
+        <summary>Agentes do ciclo</summary>
+        <div class="tag-wrap">
+          <span class="tag agent-tag">ABTestAutomator</span><span class="tag agent-tag">ViralLoopTracker</span><span class="tag agent-tag">ActivationOptimizer</span><span class="tag agent-tag">CACLTVModeler</span><span class="tag agent-tag">AdCopyMachine</span><span class="tag agent-tag">LandingPageMorpher</span><span class="tag agent-tag">WebinarPromoter</span><span class="tag agent-tag">LeadMagnetCreator</span><span class="tag agent-tag">CampaignOrchestrator</span><span class="tag agent-tag">BattlecardUpdater</span><span class="tag agent-tag">ReleaseNoteWriter</span><span class="tag agent-tag">PositioningTester</span><span class="tag agent-tag">PersonaSync</span><span class="tag agent-tag">LaunchPlanner</span><span class="tag agent-tag">BidAutoAdjuster</span><span class="tag agent-tag">KeywordOpportunitySpotter</span><span class="tag agent-tag">AdFatigueMonitor</span><span class="tag agent-tag">CreativeAssetTester</span><span class="tag agent-tag">ROASMaximizer</span><span class="tag agent-tag">TopicClusterPlanner</span><span class="tag agent-tag">SEODraftWriter</span><span class="tag agent-tag">PlagiarismToneChecker</span>
+        </div>
+      </details>
+    </section>
+    
+    <section class="cycle-card" data-cycle="8">
+      <div class="cycle-top">
+        <div>
+          <h3>Ciclo 8 — Marketing Growth • Lote 2/2</h3>
+          <p>Growth, conteúdo, mídia e lifecycle</p>
+        </div>
+        <div class="cycle-metrics">
+          <span class="pill">22 agentes</span>
+          <span class="pill effort">UE 60</span>
+          <span class="pill">Média-Alta</span>
+        </div>
+      </div>
+
+      <div class="protocol-grid">
+        <div class="lane codex">
+          <h4>Lane CODEX</h4>
+          <ol>
+            <li><strong>Execução 1:</strong> executar o primeiro item do ciclo/lote do CODEX.</li>
+            <li><strong>Execução 2+:</strong> validar o último pacote do JULES e depois executar o próximo item próprio.</li>
+            <li>Gerar artefatos reais: código, schemas, contratos, testes, seeds, filas, APIs, integrações.</li>
+            <li>Fechar cada microentrega com diff objetivo, evidência e próximos passos.</li>
+          </ol>
+        </div>
+        <div class="lane jules">
+          <h4>Lane JULES</h4>
+          <ol>
+            <li><strong>Execução 1:</strong> executar o primeiro item do ciclo/lote do JULES.</li>
+            <li><strong>Execução 2+:</strong> validar o último pacote do CODEX e depois executar o próximo item próprio.</li>
+            <li>Gerar arquitetura, prompts, contratos de agente, critérios de aceite, segurança e governança.</li>
+            <li>Bloquear merge se faltar rastreabilidade, isolamento, observabilidade ou teste mínimo.</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="phases">
+        <div class="phase"><strong>F1</strong><span>Descoberta, escopo e decomposição do lote</span></div>
+        <div class="phase"><strong>F2</strong><span>Contrato do agente, IO, guardrails e RACI</span></div>
+        <div class="phase"><strong>F3</strong><span>Prompting, memória, ferramentas e integrações</span></div>
+        <div class="phase"><strong>F4</strong><span>Implementação, testes, observabilidade e docs</span></div>
+        <div class="phase"><strong>F5</strong><span>Validação cruzada, merge gate e handoff</span></div>
+      </div>
+
+      <details>
+        <summary>Agentes do ciclo</summary>
+        <div class="tag-wrap">
+          <span class="tag agent-tag">ContentRepurposer</span><span class="tag agent-tag">DistributionAutomator</span><span class="tag agent-tag">SubjectLineTester</span><span class="tag agent-tag">ChurnWinBackSequencer</span><span class="tag agent-tag">DripCampaignTrigger</span><span class="tag agent-tag">NewsletterCurator</span><span class="tag agent-tag">UnsubscribePredictor</span><span class="tag agent-tag">MarTechSync</span><span class="tag agent-tag">DataHygieneMonitor</span><span class="tag agent-tag">UTMBuilderBot</span><span class="tag agent-tag">LeadRoutingTroubleshooter</span><span class="tag agent-tag">DashboardAutomator</span><span class="tag agent-tag">BacklinkScouter</span><span class="tag agent-tag">OnPageOptimizer</span><span class="tag agent-tag">CannibalizationDetector</span><span class="tag agent-tag">SERPVolatilityTracker</span><span class="tag agent-tag">SchemaMarkupGenerator</span><span class="tag agent-tag">BrandGuidelineEnforcer</span><span class="tag agent-tag">PRScraper</span><span class="tag agent-tag">SentimentShiftAlerter</span><span class="tag agent-tag">InfluencerVettor</span><span class="tag agent-tag">CrisisCommsDrafter</span>
+        </div>
+      </details>
+    </section>
+    
+    <section class="cycle-card" data-cycle="9">
+      <div class="cycle-top">
+        <div>
+          <h3>Ciclo 9 — Customer Success e Suporte</h3>
+          <p>Customer Success, implementação e suporte</p>
+        </div>
+        <div class="cycle-metrics">
+          <span class="pill">35 agentes</span>
+          <span class="pill effort">UE 76</span>
+          <span class="pill">Alta</span>
+        </div>
+      </div>
+
+      <div class="protocol-grid">
+        <div class="lane codex">
+          <h4>Lane CODEX</h4>
+          <ol>
+            <li><strong>Execução 1:</strong> executar o primeiro item do ciclo/lote do CODEX.</li>
+            <li><strong>Execução 2+:</strong> validar o último pacote do JULES e depois executar o próximo item próprio.</li>
+            <li>Gerar artefatos reais: código, schemas, contratos, testes, seeds, filas, APIs, integrações.</li>
+            <li>Fechar cada microentrega com diff objetivo, evidência e próximos passos.</li>
+          </ol>
+        </div>
+        <div class="lane jules">
+          <h4>Lane JULES</h4>
+          <ol>
+            <li><strong>Execução 1:</strong> executar o primeiro item do ciclo/lote do JULES.</li>
+            <li><strong>Execução 2+:</strong> validar o último pacote do CODEX e depois executar o próximo item próprio.</li>
+            <li>Gerar arquitetura, prompts, contratos de agente, critérios de aceite, segurança e governança.</li>
+            <li>Bloquear merge se faltar rastreabilidade, isolamento, observabilidade ou teste mínimo.</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="phases">
+        <div class="phase"><strong>F1</strong><span>Descoberta, escopo e decomposição do lote</span></div>
+        <div class="phase"><strong>F2</strong><span>Contrato do agente, IO, guardrails e RACI</span></div>
+        <div class="phase"><strong>F3</strong><span>Prompting, memória, ferramentas e integrações</span></div>
+        <div class="phase"><strong>F4</strong><span>Implementação, testes, observabilidade e docs</span></div>
+        <div class="phase"><strong>F5</strong><span>Validação cruzada, merge gate e handoff</span></div>
+      </div>
+
+      <details>
+        <summary>Agentes do ciclo</summary>
+        <div class="tag-wrap">
+          <span class="tag agent-tag">QBRDeckBuilder</span><span class="tag agent-tag">HealthScoreTrigger</span><span class="tag agent-tag">UpsellPrompt</span><span class="tag agent-tag">BestPracticeRecommender</span><span class="tag agent-tag">ExecutiveSponsorTracker</span><span class="tag agent-tag">ProjectPlanTracker</span><span class="tag agent-tag">APIKeyConfigurator</span><span class="tag agent-tag">DataMigrationValidator</span><span class="tag agent-tag">MilestoneChaser</span><span class="tag agent-tag">DelayEscalator</span><span class="tag agent-tag">WelcomeSequencer</span><span class="tag agent-tag">AhaMomentTracker</span><span class="tag agent-tag">TrainingVideoRecommender</span><span class="tag agent-tag">FAQAutoResponder</span><span class="tag agent-tag">AdoptionMetricAnalyzer</span><span class="tag agent-tag">TicketClassifier</span><span class="tag agent-tag">SemanticSearchKB</span><span class="tag agent-tag">L1AutoResolver</span><span class="tag agent-tag">L3BugReplicator</span><span class="tag agent-tag">AngryCustomerEscalator</span><span class="tag agent-tag">SLAMonitor</span><span class="tag agent-tag">PatchUpdateAlerter</span><span class="tag agent-tag">ScalabilityPredictor</span><span class="tag agent-tag">CustomScriptGenerator</span><span class="tag agent-tag">OutageCommunicator</span><span class="tag agent-tag">RenewalContractGenerator</span><span class="tag agent-tag">CrossSellMapper</span><span class="tag agent-tag">RelationshipMatrixBuilder</span><span class="tag agent-tag">PricingTierRecommender</span><span class="tag agent-tag">WhiteSpaceAnalyzer</span><span class="tag agent-tag">CSATNPSAggregator</span><span class="tag agent-tag">TicketBacklogAnalyzer</span><span class="tag agent-tag">KBGapIdentifier</span><span class="tag agent-tag">ShiftScheduler</span><span class="tag agent-tag">RefundProcessor</span>
+        </div>
+      </details>
+    </section>
+    
+    <section class="cycle-card" data-cycle="10">
+      <div class="cycle-top">
+        <div>
+          <h3>Ciclo 10 — Operações e Inteligência (RevOps)</h3>
+          <p>RevOps, Sales Ops, Deal Desk e GTM Engineering</p>
+        </div>
+        <div class="cycle-metrics">
+          <span class="pill">31 agentes</span>
+          <span class="pill effort">UE 76</span>
+          <span class="pill">Alta</span>
+        </div>
+      </div>
+
+      <div class="protocol-grid">
+        <div class="lane codex">
+          <h4>Lane CODEX</h4>
+          <ol>
+            <li><strong>Execução 1:</strong> executar o primeiro item do ciclo/lote do CODEX.</li>
+            <li><strong>Execução 2+:</strong> validar o último pacote do JULES e depois executar o próximo item próprio.</li>
+            <li>Gerar artefatos reais: código, schemas, contratos, testes, seeds, filas, APIs, integrações.</li>
+            <li>Fechar cada microentrega com diff objetivo, evidência e próximos passos.</li>
+          </ol>
+        </div>
+        <div class="lane jules">
+          <h4>Lane JULES</h4>
+          <ol>
+            <li><strong>Execução 1:</strong> executar o primeiro item do ciclo/lote do JULES.</li>
+            <li><strong>Execução 2+:</strong> validar o último pacote do CODEX e depois executar o próximo item próprio.</li>
+            <li>Gerar arquitetura, prompts, contratos de agente, critérios de aceite, segurança e governança.</li>
+            <li>Bloquear merge se faltar rastreabilidade, isolamento, observabilidade ou teste mínimo.</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="phases">
+        <div class="phase"><strong>F1</strong><span>Descoberta, escopo e decomposição do lote</span></div>
+        <div class="phase"><strong>F2</strong><span>Contrato do agente, IO, guardrails e RACI</span></div>
+        <div class="phase"><strong>F3</strong><span>Prompting, memória, ferramentas e integrações</span></div>
+        <div class="phase"><strong>F4</strong><span>Implementação, testes, observabilidade e docs</span></div>
+        <div class="phase"><strong>F5</strong><span>Validação cruzada, merge gate e handoff</span></div>
+      </div>
+
+      <details>
+        <summary>Agentes do ciclo</summary>
+        <div class="tag-wrap">
+          <span class="tag agent-tag">FunnelLeakDetector</span><span class="tag agent-tag">DataSiloBridger</span><span class="tag agent-tag">ToolROIAnalyzer</span><span class="tag agent-tag">GTMAlignmentScorer</span><span class="tag agent-tag">ProcessBottleneckAlerter</span><span class="tag agent-tag">Mapeia</span><span class="tag agent-tag">CRMCleanser</span><span class="tag agent-tag">TerritoryBalancer</span><span class="tag agent-tag">QuotaAttainmentTracker</span><span class="tag agent-tag">ValidationRuleEnforcer</span><span class="tag agent-tag">DuplicateMerger</span><span class="tag agent-tag">MicroLearningCreator</span><span class="tag agent-tag">VoicePitchGrader</span><span class="tag agent-tag">PlaybookUpdater</span><span class="tag agent-tag">CompetitorIntelBroadcaster</span><span class="tag agent-tag">OnboardingRampTracker</span><span class="tag agent-tag">MarginCalculator</span><span class="tag agent-tag">NonStandardFlag</span><span class="tag agent-tag">DiscountWaterfallModeler</span><span class="tag agent-tag">LegalClauseMatcher</span><span class="tag agent-tag">ApprovalWorkflowRouter</span><span class="tag agent-tag">APIIntegrationBuilder</span><span class="tag agent-tag">LeadScoringModeler</span><span class="tag agent-tag">WebhookMonitor</span><span class="tag agent-tag">CustomCRMUIBuilder</span><span class="tag agent-tag">DataEnrichmentAutomator</span><span class="tag agent-tag">CohortAnalyzer</span><span class="tag agent-tag">ForecastingModeler</span><span class="tag agent-tag">PriceDiscountImpact</span><span class="tag agent-tag">ChannelAttritionPredictor</span><span class="tag agent-tag">ACVGrowthTracker</span>
+        </div>
+      </details>
+    </section>
+    
+    <section class="cycle-card" data-cycle="11">
+      <div class="cycle-top">
+        <div>
+          <h3>Ciclo 11 — Análise de Dados e BI</h3>
+          <p>BI, analytics, revenue analysis e product analytics</p>
+        </div>
+        <div class="cycle-metrics">
+          <span class="pill">30 agentes</span>
+          <span class="pill effort">UE 76</span>
+          <span class="pill">Alta</span>
+        </div>
+      </div>
+
+      <div class="protocol-grid">
+        <div class="lane codex">
+          <h4>Lane CODEX</h4>
+          <ol>
+            <li><strong>Execução 1:</strong> executar o primeiro item do ciclo/lote do CODEX.</li>
+            <li><strong>Execução 2+:</strong> validar o último pacote do JULES e depois executar o próximo item próprio.</li>
+            <li>Gerar artefatos reais: código, schemas, contratos, testes, seeds, filas, APIs, integrações.</li>
+            <li>Fechar cada microentrega com diff objetivo, evidência e próximos passos.</li>
+          </ol>
+        </div>
+        <div class="lane jules">
+          <h4>Lane JULES</h4>
+          <ol>
+            <li><strong>Execução 1:</strong> executar o primeiro item do ciclo/lote do JULES.</li>
+            <li><strong>Execução 2+:</strong> validar o último pacote do CODEX e depois executar o próximo item próprio.</li>
+            <li>Gerar arquitetura, prompts, contratos de agente, critérios de aceite, segurança e governança.</li>
+            <li>Bloquear merge se faltar rastreabilidade, isolamento, observabilidade ou teste mínimo.</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="phases">
+        <div class="phase"><strong>F1</strong><span>Descoberta, escopo e decomposição do lote</span></div>
+        <div class="phase"><strong>F2</strong><span>Contrato do agente, IO, guardrails e RACI</span></div>
+        <div class="phase"><strong>F3</strong><span>Prompting, memória, ferramentas e integrações</span></div>
+        <div class="phase"><strong>F4</strong><span>Implementação, testes, observabilidade e docs</span></div>
+        <div class="phase"><strong>F5</strong><span>Validação cruzada, merge gate e handoff</span></div>
+      </div>
+
+      <details>
+        <summary>Agentes do ciclo</summary>
+        <div class="tag-wrap">
+          <span class="tag agent-tag">RequirementsGatherer</span><span class="tag agent-tag">ProcessFlowMapper</span><span class="tag agent-tag">UserStoryWriter</span><span class="tag agent-tag">StakeholderUpdateAutomator</span><span class="tag agent-tag">ScopeCreepDetector</span><span class="tag agent-tag">SQLQueryGenerator</span><span class="tag agent-tag">AnomalyDetector</span><span class="tag agent-tag">DashboardAutoFreshener</span><span class="tag agent-tag">DataCleaningBot</span><span class="tag agent-tag">StatSignificanceTester</span><span class="tag agent-tag">ARRBridgeBuilder</span><span class="tag agent-tag">NetRetentionModeler</span><span class="tag agent-tag">ChurnCohortIsolator</span><span class="tag agent-tag">PricingElasticityTester</span><span class="tag agent-tag">PipelineVelocityTracker</span><span class="tag agent-tag">JourneyDropOffLocator</span><span class="tag agent-tag">FeatureHeatmapper</span><span class="tag agent-tag">ABTestSynthesizer</span><span class="tag agent-tag">StickinessTracker</span><span class="tag agent-tag">SessionReplaySummarizer</span><span class="tag agent-tag">MarketShareEstimator</span><span class="tag agent-tag">MacroFactorTracker</span><span class="tag agent-tag">CompetitorFinancialScraper</span><span class="tag agent-tag">StrategicKPIAggregator</span><span class="tag agent-tag">GeospatialExpansionMapper</span><span class="tag agent-tag">AttributionModeler</span><span class="tag agent-tag">MediaMixOptimizer</span><span class="tag agent-tag">CampaignDecayPredictor</span><span class="tag agent-tag">AudienceSegmentDiscoverer</span><span class="tag agent-tag">LTVbyChannelCalculator</span>
+        </div>
+      </details>
+    </section>
+    
+    <section class="cycle-card" data-cycle="12">
+      <div class="cycle-top">
+        <div>
+          <h3>Ciclo 12 — Financeiro, Jurídico e Administrativo • Lote 1/2</h3>
+          <p>Jurídico, billing, cobrança, crédito e controladoria</p>
+        </div>
+        <div class="cycle-metrics">
+          <span class="pill">18 agentes</span>
+          <span class="pill effort">UE 90</span>
+          <span class="pill">Muito Alta</span>
+        </div>
+      </div>
+
+      <div class="protocol-grid">
+        <div class="lane codex">
+          <h4>Lane CODEX</h4>
+          <ol>
+            <li><strong>Execução 1:</strong> executar o primeiro item do ciclo/lote do CODEX.</li>
+            <li><strong>Execução 2+:</strong> validar o último pacote do JULES e depois executar o próximo item próprio.</li>
+            <li>Gerar artefatos reais: código, schemas, contratos, testes, seeds, filas, APIs, integrações.</li>
+            <li>Fechar cada microentrega com diff objetivo, evidência e próximos passos.</li>
+          </ol>
+        </div>
+        <div class="lane jules">
+          <h4>Lane JULES</h4>
+          <ol>
+            <li><strong>Execução 1:</strong> executar o primeiro item do ciclo/lote do JULES.</li>
+            <li><strong>Execução 2+:</strong> validar o último pacote do CODEX e depois executar o próximo item próprio.</li>
+            <li>Gerar arquitetura, prompts, contratos de agente, critérios de aceite, segurança e governança.</li>
+            <li>Bloquear merge se faltar rastreabilidade, isolamento, observabilidade ou teste mínimo.</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="phases">
+        <div class="phase"><strong>F1</strong><span>Descoberta, escopo e decomposição do lote</span></div>
+        <div class="phase"><strong>F2</strong><span>Contrato do agente, IO, guardrails e RACI</span></div>
+        <div class="phase"><strong>F3</strong><span>Prompting, memória, ferramentas e integrações</span></div>
+        <div class="phase"><strong>F4</strong><span>Implementação, testes, observabilidade e docs</span></div>
+        <div class="phase"><strong>F5</strong><span>Validação cruzada, merge gate e handoff</span></div>
+      </div>
+
+      <details>
+        <summary>Agentes do ciclo</summary>
+        <div class="tag-wrap">
+          <span class="tag agent-tag">ContractRedliner</span><span class="tag agent-tag">IPInfringementScraper</span><span class="tag agent-tag">RegulatoryChangeAlerter</span><span class="tag agent-tag">NDAAutoSigner</span><span class="tag agent-tag">RiskExposureQuantifier</span><span class="tag agent-tag">InvoiceGenerator</span><span class="tag agent-tag">ProrationCalculator</span><span class="tag agent-tag">FailedPaymentRetrier</span><span class="tag agent-tag">TaxExemptionVerifier</span><span class="tag agent-tag">DisputedChargeAggregator</span><span class="tag agent-tag">DunningAutomator</span><span class="tag agent-tag">PaymentPlanNegotiator</span><span class="tag agent-tag">PromiseToPayTracker</span><span class="tag agent-tag">BadDebtPredictor</span><span class="tag agent-tag">CollectionAgencyRouter</span><span class="tag agent-tag">CloudSpendOptimizer</span><span class="tag agent-tag">SaaSLicenseAuditor</span><span class="tag agent-tag">InstanceRightSizer</span>
+        </div>
+      </details>
+    </section>
+    
+    <section class="cycle-card" data-cycle="13">
+      <div class="cycle-top">
+        <div>
+          <h3>Ciclo 13 — Financeiro, Jurídico e Administrativo • Lote 2/2</h3>
+          <p>Jurídico, billing, cobrança, crédito e controladoria</p>
+        </div>
+        <div class="cycle-metrics">
+          <span class="pill">17 agentes</span>
+          <span class="pill effort">UE 90</span>
+          <span class="pill">Muito Alta</span>
+        </div>
+      </div>
+
+      <div class="protocol-grid">
+        <div class="lane codex">
+          <h4>Lane CODEX</h4>
+          <ol>
+            <li><strong>Execução 1:</strong> executar o primeiro item do ciclo/lote do CODEX.</li>
+            <li><strong>Execução 2+:</strong> validar o último pacote do JULES e depois executar o próximo item próprio.</li>
+            <li>Gerar artefatos reais: código, schemas, contratos, testes, seeds, filas, APIs, integrações.</li>
+            <li>Fechar cada microentrega com diff objetivo, evidência e próximos passos.</li>
+          </ol>
+        </div>
+        <div class="lane jules">
+          <h4>Lane JULES</h4>
+          <ol>
+            <li><strong>Execução 1:</strong> executar o primeiro item do ciclo/lote do JULES.</li>
+            <li><strong>Execução 2+:</strong> validar o último pacote do CODEX e depois executar o próximo item próprio.</li>
+            <li>Gerar arquitetura, prompts, contratos de agente, critérios de aceite, segurança e governança.</li>
+            <li>Bloquear merge se faltar rastreabilidade, isolamento, observabilidade ou teste mínimo.</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="phases">
+        <div class="phase"><strong>F1</strong><span>Descoberta, escopo e decomposição do lote</span></div>
+        <div class="phase"><strong>F2</strong><span>Contrato do agente, IO, guardrails e RACI</span></div>
+        <div class="phase"><strong>F3</strong><span>Prompting, memória, ferramentas e integrações</span></div>
+        <div class="phase"><strong>F4</strong><span>Implementação, testes, observabilidade e docs</span></div>
+        <div class="phase"><strong>F5</strong><span>Validação cruzada, merge gate e handoff</span></div>
+      </div>
+
+      <details>
+        <summary>Agentes do ciclo</summary>
+        <div class="tag-wrap">
+          <span class="tag agent-tag">BudgetVariancePinger</span><span class="tag agent-tag">MultiCloudCostModeler</span><span class="tag agent-tag">CashAppMatcher</span><span class="tag agent-tag">BankReconciliationBot</span><span class="tag agent-tag">AgingReportSender</span><span class="tag agent-tag">CreditHoldReleaser</span><span class="tag agent-tag">RemittanceExtractor</span><span class="tag agent-tag">CreditScoreFetcher</span><span class="tag agent-tag">FinancialRatioCalculator</span><span class="tag agent-tag">CreditLimitRecommender</span><span class="tag agent-tag">BankruptcyRiskMonitor</span><span class="tag agent-tag">TradeReferenceChecker</span><span class="tag agent-tag">Controller MonthEndCloseAutomator</span><span class="tag agent-tag">AccrualEngine</span><span class="tag agent-tag">AuditTrailBuilder</span><span class="tag agent-tag">GLAnomalyDetector</span><span class="tag agent-tag">ComplianceChecklistEnforcer</span>
+        </div>
+      </details>
+    </section>
+    
+    <section class="cycle-card" data-cycle="14">
+      <div class="cycle-top">
+        <div>
+          <h3>Ciclo 14 — Fintech, Risco e Compliance • Lote 1/2</h3>
+          <p>Compliance, AML, KYC, fraude e controles internos fintech</p>
+        </div>
+        <div class="cycle-metrics">
+          <span class="pill">18 agentes</span>
+          <span class="pill effort">UE 90</span>
+          <span class="pill">Muito Alta</span>
+        </div>
+      </div>
+
+      <div class="protocol-grid">
+        <div class="lane codex">
+          <h4>Lane CODEX</h4>
+          <ol>
+            <li><strong>Execução 1:</strong> executar o primeiro item do ciclo/lote do CODEX.</li>
+            <li><strong>Execução 2+:</strong> validar o último pacote do JULES e depois executar o próximo item próprio.</li>
+            <li>Gerar artefatos reais: código, schemas, contratos, testes, seeds, filas, APIs, integrações.</li>
+            <li>Fechar cada microentrega com diff objetivo, evidência e próximos passos.</li>
+          </ol>
+        </div>
+        <div class="lane jules">
+          <h4>Lane JULES</h4>
+          <ol>
+            <li><strong>Execução 1:</strong> executar o primeiro item do ciclo/lote do JULES.</li>
+            <li><strong>Execução 2+:</strong> validar o último pacote do CODEX e depois executar o próximo item próprio.</li>
+            <li>Gerar arquitetura, prompts, contratos de agente, critérios de aceite, segurança e governança.</li>
+            <li>Bloquear merge se faltar rastreabilidade, isolamento, observabilidade ou teste mínimo.</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="phases">
+        <div class="phase"><strong>F1</strong><span>Descoberta, escopo e decomposição do lote</span></div>
+        <div class="phase"><strong>F2</strong><span>Contrato do agente, IO, guardrails e RACI</span></div>
+        <div class="phase"><strong>F3</strong><span>Prompting, memória, ferramentas e integrações</span></div>
+        <div class="phase"><strong>F4</strong><span>Implementação, testes, observabilidade e docs</span></div>
+        <div class="phase"><strong>F5</strong><span>Validação cruzada, merge gate e handoff</span></div>
+      </div>
+
+      <details>
+        <summary>Agentes do ciclo</summary>
+        <div class="tag-wrap">
+          <span class="tag agent-tag">PolicyMappingBot</span><span class="tag agent-tag">RegulatoryTrainingTracker</span><span class="tag agent-tag">SanctionsScreener</span><span class="tag agent-tag">CommsSurveillanceBot</span><span class="tag agent-tag">AuditPrepEngine</span><span class="tag agent-tag">SARDrafter</span><span class="tag agent-tag">TransactionLinkAnalyzer</span><span class="tag agent-tag">MoneyMuleDetector</span><span class="tag agent-tag">HighRiskJurisdictionPinger</span><span class="tag agent-tag">CryptoTracingBot</span><span class="tag agent-tag">IDVerificationMatcher</span><span class="tag agent-tag">LivenessCheckAnalyzer</span><span class="tag agent-tag">UBOMapper</span><span class="tag agent-tag">AddressProofValidator</span><span class="tag agent-tag">PEPScreener</span><span class="tag agent-tag">ChargebackDisputeAutomator</span><span class="tag agent-tag">VelocityRuleEngine</span><span class="tag agent-tag">SyntheticIdentityDetector</span>
+        </div>
+      </details>
+    </section>
+    
+    <section class="cycle-card" data-cycle="15">
+      <div class="cycle-top">
+        <div>
+          <h3>Ciclo 15 — Fintech, Risco e Compliance • Lote 2/2</h3>
+          <p>Compliance, AML, KYC, fraude e controles internos fintech</p>
+        </div>
+        <div class="cycle-metrics">
+          <span class="pill">18 agentes</span>
+          <span class="pill effort">UE 90</span>
+          <span class="pill">Muito Alta</span>
+        </div>
+      </div>
+
+      <div class="protocol-grid">
+        <div class="lane codex">
+          <h4>Lane CODEX</h4>
+          <ol>
+            <li><strong>Execução 1:</strong> executar o primeiro item do ciclo/lote do CODEX.</li>
+            <li><strong>Execução 2+:</strong> validar o último pacote do JULES e depois executar o próximo item próprio.</li>
+            <li>Gerar artefatos reais: código, schemas, contratos, testes, seeds, filas, APIs, integrações.</li>
+            <li>Fechar cada microentrega com diff objetivo, evidência e próximos passos.</li>
+          </ol>
+        </div>
+        <div class="lane jules">
+          <h4>Lane JULES</h4>
+          <ol>
+            <li><strong>Execução 1:</strong> executar o primeiro item do ciclo/lote do JULES.</li>
+            <li><strong>Execução 2+:</strong> validar o último pacote do CODEX e depois executar o próximo item próprio.</li>
+            <li>Gerar arquitetura, prompts, contratos de agente, critérios de aceite, segurança e governança.</li>
+            <li>Bloquear merge se faltar rastreabilidade, isolamento, observabilidade ou teste mínimo.</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="phases">
+        <div class="phase"><strong>F1</strong><span>Descoberta, escopo e decomposição do lote</span></div>
+        <div class="phase"><strong>F2</strong><span>Contrato do agente, IO, guardrails e RACI</span></div>
+        <div class="phase"><strong>F3</strong><span>Prompting, memória, ferramentas e integrações</span></div>
+        <div class="phase"><strong>F4</strong><span>Implementação, testes, observabilidade e docs</span></div>
+        <div class="phase"><strong>F5</strong><span>Validação cruzada, merge gate e handoff</span></div>
+      </div>
+
+      <details>
+        <summary>Agentes do ciclo</summary>
+        <div class="tag-wrap">
+          <span class="tag agent-tag">DeviceFingerprintMatcher</span><span class="tag agent-tag">Risk Underwriter AltDataScorer</span><span class="tag agent-tag">DefaultProbabilityModeler</span><span class="tag agent-tag">AutoDecisionEngine</span><span class="tag agent-tag">LimitDecreaseRecommender</span><span class="tag agent-tag">CentralBankXMLGenerator</span><span class="tag agent-tag">CapitalAdequacyCalculator</span><span class="tag agent-tag">LiquidityRatioMonitor</span><span class="tag agent-tag">DeadlineTracker</span><span class="tag agent-tag">StressTestModeler</span><span class="tag agent-tag">ProcessWalkthroughAutomator</span><span class="tag agent-tag">AccessRightAuditor</span><span class="tag agent-tag">RemediationPlanTracker</span><span class="tag agent-tag">TransactionHoldReviewer</span><span class="tag agent-tag">SLAEscalator</span><span class="tag agent-tag">FalsePositiveReducer</span><span class="tag agent-tag">CapacityModeler</span><span class="tag agent-tag">IncidentPostMortemDrafter</span>
+        </div>
+      </details>
+    </section>
+    
+    </div>
+  </section>
+
+  <section class="footer-note">
+    <strong>Resumo executivo:</strong> o catálogo é grande o bastante para justificar <strong>15 ciclos</strong>. A estrutura mais segura é: ambos começam já na primeira execução; da segunda em diante, fazem <strong>validação cruzada primeiro</strong> e <strong>execução própria depois</strong>. Isso preserva paralelismo, reduz conflito e impede a gloriosa tragédia da autoaprovação.
+  </section>
+</main>
+
+<script>
+const search = document.getElementById('search');
+const cards = [...document.querySelectorAll('.cycle-card')];
+search.addEventListener('input', () => {
+  const q = search.value.toLowerCase().trim();
+  cards.forEach(card => {
+    const txt = card.innerText.toLowerCase();
+    card.style.display = txt.includes(q) ? '' : 'none';
+  });
+});
+</script>
+</body>
+</html>
