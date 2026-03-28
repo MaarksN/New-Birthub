@@ -1,30 +1,65 @@
-import Link from 'next/link';
+"use client";
 
-export default function TopNav() {
+import Link from 'next/link';
+import { Search, Bell, Menu, Zap } from 'lucide-react';
+import { useState } from 'react';
+
+export default function TopNav({ onSearch }: { onSearch?: (q: string) => void }) {
+  const [query, setQuery] = useState('');
+
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setQuery(e.target.value);
+    if (onSearch) onSearch(e.target.value);
+  };
+
   return (
-    <header className="bg-white border-b border-gray-200 sticky top-0 z-10 w-full">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16">
-          <div className="flex">
-            <div className="flex-shrink-0 flex items-center md:hidden">
-               <Link href="/">
-                 <h2 className="text-xl font-bold tracking-tight text-blue-600">BirthHub360</h2>
-               </Link>
-            </div>
+    <header className="bg-white/80 backdrop-blur-md border-b border-gray-100 sticky top-0 z-30 w-full transition-all">
+      <div className="mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-16">
+          <div className="flex md:hidden">
+            <Link href="/" className="flex items-center space-x-2">
+              <Zap className="w-5 h-5 text-blue-600" />
+              <h2 className="text-xl font-bold tracking-tight text-gray-900">BirthHub360</h2>
+            </Link>
           </div>
-          <div className="flex items-center space-x-4">
-            <button className="text-gray-500 hover:text-gray-700">
-               <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-               </svg>
+
+          <div className="hidden md:flex flex-1 items-center space-x-4 max-w-lg relative">
+             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <Search className="h-4 w-4 text-gray-400" />
+             </div>
+             <input
+                type="text"
+                placeholder="Search across 332 agents, domains or roles..."
+                value={query}
+                onChange={handleSearch}
+                className="block w-full pl-10 pr-3 py-2 border border-gray-200 rounded-lg leading-5 bg-gray-50 placeholder-gray-400 focus:outline-none focus:bg-white focus:ring-2 focus:ring-blue-500 focus:border-transparent sm:text-sm transition-all"
+             />
+             {query && (
+               <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                 <span className="text-xs font-medium text-gray-400">Esc to clear</span>
+               </div>
+             )}
+          </div>
+
+          <div className="flex items-center space-x-4 ml-auto">
+            <button className="text-gray-400 hover:text-gray-600 relative transition-colors focus:outline-none">
+               <span className="absolute top-0 right-0 block h-2 w-2 rounded-full bg-red-400 ring-2 ring-white"></span>
+               <Bell className="h-5 w-5" />
             </button>
-            <div className="ml-3 relative">
-              <div className="flex items-center">
-                <div className="h-8 w-8 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold">
-                  A
+            <div className="relative">
+              <div className="flex items-center space-x-3">
+                <div className="hidden md:block text-right">
+                  <p className="text-sm font-medium text-gray-900 leading-none">Jules Admin</p>
+                  <p className="text-xs text-gray-500 mt-1">Platform Orchestrator</p>
+                </div>
+                <div className="h-9 w-9 rounded-full bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center text-white font-bold text-sm shadow-md ring-2 ring-white cursor-pointer hover:opacity-90 transition-opacity">
+                  JA
                 </div>
               </div>
             </div>
+            <button className="md:hidden text-gray-500 hover:text-gray-700 ml-2">
+              <Menu className="h-6 w-6" />
+            </button>
           </div>
         </div>
       </div>
